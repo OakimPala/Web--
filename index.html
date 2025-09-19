@@ -6,29 +6,29 @@
   <title>Food:Fast&Hot</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <h1>Food:Fast&Hot</h1>
     <nav>
-      <a href="#">О нас</a>
-      <a href="#">Собрать ланч</a>
-      <a href="#">Заказы</a>
+      <a href="#forus">О нас</a>
+      <a href="#top">Топ заказов</a>
+      <a href="#feedback">Обратная связь</a>
       <a href="#contacts">Контакты</a>
     </nav>
+    <div class="login-link">
+      <a href="auth.html">Вход</a>
+    </div>
   </header>
 
   <main>
-    
-    <section>
+    <section id="forus">
       <h2>О нас</h2>
       <img src="https://samsa.by/d/img_6239.jpg" alt="Бизнес-ланч">
       <p>Food:Fast&Hot — доставка бизнес-ланчей в Москве. Мы привезем вам горячую вкусную еду в любую точку города к назначенному времени.</p>
     </section>
 
-    
     <section>
       <h2>Преимущества Food:Fast&Hot</h2>
       <ul>
@@ -38,8 +38,7 @@
       </ul>
     </section>
 
-    
-    <section>
+    <section id="top">
       <h2>Топ-5 популярных блюд</h2>
       <table class="dishes-table">
         <thead>
@@ -51,17 +50,17 @@
         </thead>
         <tbody>
           <tr>
-            <td>Лазанья</td>
+            <td>Казан кебаб с бараниной</td>
             <td>185 заказов в неделю</td>
             <td class="price">385₽</td>
           </tr>
           <tr>
-            <td>Том Ям с креветками</td>
+            <td>Плов с курицей</td>
             <td>161 заказ в неделю</td>
-            <td class="price">365₽</td>   
+            <td class="price">365₽</td>
           </tr>
           <tr>
-            <td>Норвежский суп</td>
+            <td>Шурпа</td>
             <td>144 заказа в неделю</td>
             <td class="price">270₽</td>
           </tr>
@@ -78,10 +77,54 @@
         </tbody>
       </table>
     </section>
+
+    <!-- Форма обратной связи -->
+    <section id="feedback">
+      <h2>Форма обратной связи</h2>
+      <form action="https://httpbin.org/post" method="POST" enctype="multipart/form-data" class="feedback-form">
+        <label>ФИО:
+          <input type="text" name="fullname" required>
+        </label>
+        
+        <label>Email:
+          <input type="email" name="email" required>
+        </label>
+
+        <fieldset>
+          <legend>Откуда узнали о нас?</legend>
+          <label><input type="radio" name="source" value="Интернет"> Интернет</label>
+          <label><input type="radio" name="source" value="Реклама"> Реклама</label>
+          <label><input type="radio" name="source" value="Друзья"> Друзья</label>
+        </fieldset>
+
+        <label>Тип обращения:
+          <select name="type">
+            <option value="complaint">Жалоба</option>
+            <option value="suggestion">Предложение</option>
+          </select>
+        </label>
+
+        <label>Сообщение:
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+
+        <label>Вложения:
+          <input type="file" name="file">
+        </label>
+
+        <label>
+          <input type="checkbox" name="consent" required>
+          Даю согласие на обработку персональных данных
+        </label>
+
+        <button type="submit">Отправить</button>
+      </form>
+    </section>
   </main>
 
   <footer id="contacts">
     <p>Позвонить нам <a href="tel:+78005553535">+7-800-555-35-35</a></p>
+    <p>© Куманяев Никита 241-351</p>
   </footer>
 </body>
 </html>
