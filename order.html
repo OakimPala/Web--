@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Собрать ланч</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Food:Fast&Hot</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="order.html">Собрать ланч</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Блок с напитками -->
+    <section class="menu-preview">
+      
+      <h2>Супы</h2>
+      <div class="drinks">
+
+        <div class="drink-card orange">
+          <img src="https://prostokvashino.ru/upload/resize_cache/iblock/5e1/800_800_0/5e17b58e5a12db3624b168644414b70d.jpg" alt="Борщ">
+          <p><strong>109₽</strong></p>
+          <p>Борщ</p>
+          <p>300 мл</p>
+          <button type="button" class="add-btn" onclick="selectSoup('borsch')">Добавить</button>
+        </div>
+
+        <div class="drink-card apple">
+          <img src="https://s.myspar.ru/upload/img/10/1000/100071295.jpg?1721035848" alt="Солянка">
+          <p><strong>149₽</strong></p>
+          <p>Солянка</p>
+          <p>300 мл</p>
+          <button type="button" class="add-btn" onclick="selectSoup('solyanka')">Добавить</button>
+        </div>
+
+        <div class="drink-card cherry">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzBjI7ew6jgRB9mTzv4Icxq-ePMN6bCPfb6Q&s" alt="Харчо">
+          <p><strong>149₽</strong></p>
+          <p>Харчо</p>
+          <p>300 мл</p>
+          <button type="button" class="add-btn" onclick="selectSoup('harcho')">Добавить</button>
+        </div>
+
+        <div class="drink-card cherry">
+          <img src="https://anor24.ru/wp-content/uploads/2020/06/ANOR3261.jpg" alt="Шурпа">
+          <p><strong>149₽</strong></p>
+          <p>Шурпа</p>
+          <p>300 мл</p>
+          <button type="button" class="add-btn" onclick="selectSoup('shurpa')">Добавить</button>
+        </div>
+
+      </div>
+
+      <h2>Основные блюда</h2>
+      <div class="drinks">
+
+        <div class="drink-card orange">
+          <img src="https://img09.rl0.ru/afisha/e1200x1200i/daily.afisha.ru/uploads/images/9/29/929a072cc910f5b436b4608e8f25530e.jpg" alt="Плов">
+          <p><strong>150₽</strong></p>
+          <p>Плов</p>
+          <p>300 гр</p>
+          <button type="button" class="add-btn" onclick="selectMain('plov')">Добавить</button>
+        </div>
+
+        <div class="drink-card apple">
+          <img src="https://caravellacatering.com/wp-content/uploads/2023/10/kazan-kebab.jpg" alt="Казан кебаб">
+          <p><strong>240₽</strong></p>
+          <p>Казан кебаб</p>
+          <p>300 гр</p>
+          <button type="button" class="add-btn" onclick="selectMain('kebabs')">Добавить</button>
+        </div>
+
+        <div class="drink-card cherry">
+          <img src="https://club.mysamson.ru/upload/resize_cache/webp/resize_cache/iblock/70d/480_480_2/zdk6s5bokxrxbxtbtebr7gh85dbvpq6t.webp" alt="Котлеты с пюре">
+          <p><strong>240₽</strong></p>
+          <p>Котлеты с пюре</p>
+          <p>300 гр</p>
+          <button type="button" class="add-btn" onclick="selectMain('cutlets')">Добавить</button>
+        </div>
+
+        <div class="drink-card cherry">
+          <img src="https://menunedeli.ru/wp-content/uploads/2015/05/45/zharenaja-kartoshka-s-gribami-i-lukom-%D0%BE_opt.jpg" alt="Жаренная картошка с грибами">
+          <p><strong>240₽</strong></p>
+          <p>Жаренная картошка с грибами</p>
+          <p>300 гр</p>
+          <button type="button" class="add-btn" onclick="selectMain('free')">Добавить</button>
+        </div>
+
+      </div>
+
+      <h2>Напитки</h2>
+      <div class="drinks">
+
+        <div class="drink-card orange">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE2c96ckaH2aSZm89Jxenx-RKTVeXg8TOkhw&s" alt="Апельсиновый сок">
+          <p><strong>120₽</strong></p>
+          <p>Апельсиновый сок</p>
+          <p>300 мл</p>
+          <button type="button" class="add-btn" onclick="selectDrink('orange')">Добавить</button>
+        </div>
+
+        <div class="drink-card apple">
+          <img src="https://eda.ru/images/RecipePhoto/930x622/domashniy-yablochnyy-sok_173985_photo_181327.webp" alt="Яблочный сок">
+          <p><strong>90₽</strong></p>
+          <p>Яблочный сок</p>
+          <p>300 мл</p>
+          <button type="button" class="add-btn" onclick="selectDrink('apple')">Добавить</button>
+        </div>
+
+        <div class="drink-card cherry">
+          <img src="https://m.dom-eda.com/uploads/topics/preview/00/00/09/92/8ee3f425c3_1000.jpg" alt="Вишнёвый сок">
+          <p><strong>110₽</strong></p>
+          <p>Вишнёвый сок</p>
+          <p>300 мл</p>
+          <button type="button" class="add-btn" onclick="selectDrink('cherry')">Добавить</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 🔽 Блок формы -->
+    <section class="order-section">
+      <h2>Сделать заказ</h2>
+      <form action="https://httpbin.org/post" method="POST" class="order-form">
+        
+        <!-- Левая колонка -->
+        <div class="form-block">
+          <h3>Ваш заказ</h3>
+
+          <label for="soup">Суп</label>
+          <select id="soup" name="soup" required>
+            <option value="">-- Выберите суп --</option>
+            <option value="borsch">Борщ</option>
+            <option value="solyanka">Солянка</option>
+            <option value="harcho">Харчо</option>
+            <option value="shurpa">Шурпа</option>
+          </select>
+
+          <label for="main">Главное блюдо</label>
+          <select id="main" name="main" required>
+            <option value="">-- Выберите главное блюдо --</option>
+            <option value="plov">Плов</option>
+            <option value="kebabs">Кебаб</option>
+            <option value="cutlets">Котлеты с пюре</option>
+            <option value="free">Жаренная картошка с грибами</option>
+          </select>
+
+          <label for="drink">Напиток</label>
+          <select id="drink" name="drink" required>
+            <option value="">-- Выберите напиток --</option>
+            <option value="orange">Апельсиновый сок</option>
+            <option value="apple">Яблочный сок</option>
+            <option value="cherry">Вишнёвый сок</option>
+          </select>
+
+          <label for="comment">Комментарии к заказу</label>
+          <textarea id="comment" name="comment" rows="4"></textarea>
+        </div>
+
+        <!-- Правая колонка -->
+        <div class="form-block">
+          <h3>Ваши данные</h3>
+
+          <label for="name">Имя</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+
+          <label>
+            <input type="checkbox" id="subscribe" name="subscribe" checked>
+            Получать информацию о скидках и акциях
+          </label>
+
+          <label for="phone">Номер телефона</label>
+          <input type="tel" id="phone" name="phone" required>
+
+          <label for="address">Адрес доставки</label>
+          <input type="text" id="address" name="address" required>
+          <p class="hint">Доставка осуществляется только по Москве</p>
+
+          <fieldset>
+            <legend>Время доставки:</legend>
+            <label><input type="radio" name="delivery" value="asap" required> Как можно скорее</label>
+            <label><input type="radio" name="delivery" value="time"> К указанному времени</label>
+          </fieldset>
+
+          <label for="time">Укажите время доставки</label>
+          <input type="time" id="time" name="time" min="07:00" max="23:00" step="300">
+
+          <p class="hint">Доступное время доставки с 7:00 до 23:00</p>
+
+          <div class="form-buttons">
+            <button type="reset">Сбросить</button>
+            <button type="submit">Отправить</button>
+          </div>
+        </div>
+
+      </form>
+    </section>
+  </main>
+
+  <footer id="contacts">
+    <p>Позвонить нам <a href="tel:+78005553535">+7-800-555-35-35</a></p>
+    <p>© Куманяев Никита 241-351</p>
+  </footer>
+
+  <script>
+    // Функция для выбора  при клике на кнопку "Добавить"
+    function selectDrink(value) {
+      const drinkSelect = document.getElementById("drink");
+      drinkSelect.value = value;
+    }
+    function selectSoup(value) {
+      const drinkSelect = document.getElementById("soup");
+      drinkSelect.value = value;
+    }
+    function selectMain(value) {
+      const drinkSelect = document.getElementById("main");
+      drinkSelect.value = value;
+    }
+  </script>
+</body>
+</html>
+
