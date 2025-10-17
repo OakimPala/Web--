@@ -1,7 +1,0 @@
-/* === Главный файл: подключает остальные === */
-@import url("base-layout.css");
-@import url("components.css");
-@import url("forms.css");
-@import url("auth.css");
-@import url("utilities.css");
-/* print.css подключается отдельно в HTML через media="print" */
