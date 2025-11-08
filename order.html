@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Собрать ланч</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Food:Fast&Hot</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="order.html" class="active">Собрать ланч</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="combo-section">
+  <h2>Доступные для заказа комбо</h2>
+
+  <div class="combo-grid">
+    <div class="combo">
+      <div class="combo-item"><span class="emoji">🥣</span><p>Суп</p></div>
+      <div class="combo-item"><span class="emoji">🍝</span><p>Главное блюдо</p></div>
+      <div class="combo-item"><span class="emoji">🥗</span><p>Салат</p></div>
+      <div class="combo-item"><span class="emoji">🥤</span><p>Напиток</p></div>
+    </div>
+
+    <div class="combo">
+      <div class="combo-item"><span class="emoji">🥣</span><p>Суп</p></div>
+      <div class="combo-item"><span class="emoji">🍝</span><p>Главное блюдо</p></div>
+      <div class="combo-item"><span class="emoji">🥤</span><p>Напиток</p></div>
+    </div>
+
+    <div class="combo">
+      <div class="combo-item"><span class="emoji">🍝</span><p>Главное блюдо</p></div>
+      <div class="combo-item"><span class="emoji">🥗</span><p>Салат</p></div>
+      <div class="combo-item"><span class="emoji">🥤</span><p>Напиток</p></div>
+    </div>
+
+    <div class="combo">
+      <div class="combo-item"><span class="emoji">🥣</span><p>Суп</p></div>
+      <div class="combo-item"><span class="emoji">🥗</span><p>Салат</p></div>
+      <div class="combo-item"><span class="emoji">🥤</span><p>Напиток</p></div>
+    </div>
+
+    <div class="combo">
+      <div class="combo-item"><span class="emoji">🍝</span><p>Главное блюдо</p></div>
+      <div class="combo-item"><span class="emoji">🥤</span><p>Напиток</p></div>
+    </div>
+  </div>
+
+  <p class="combo-note">🍰 Десерт можно добавить к любому заказу</p>
+</section>
+
+
+    <section class="menu-preview" id="menu-section">
+      <h2>Супы</h2>
+      <div class="drinks" id="soups"></div>
+
+      <h2>Основные блюда</h2>
+      <div class="drinks" id="mains"></div>
+
+      <h2>Салаты и стартеры</h2>
+      <div class="drinks" id="salads"></div>
+
+      <h2>Десерты</h2>
+      <div class="drinks" id="desserts"></div>
+
+      <h2>Напитки</h2>
+      <div class="drinks" id="drinks"></div>
+    </section>
+
+    <!-- Блок заказа -->
+    <section class="order-section">
+      <h2>Сделать заказ</h2>
+      <form action="https://httpbin.org/post" method="POST" class="order-form">
+
+        <div class="form-block">
+          <h3>Ваш заказ</h3>
+          <p>Суп: <span id="order-soup">Блюдо не выбрано</span></p>
+          <p>Основное блюдо: <span id="order-main">Блюдо не выбрано</span></p>
+          <p>Салат и стартер: <span id="order-salad">Блюдо не выбрано</span></p>
+          <p>Десерт: <span id="order-dessert">Блюдо не выбрано</span></p>
+          <p>Напиток: <span id="order-drink">Напиток не выбран</span></p>
+          <p id="order-total" style="display:none; font-weight:bold; margin-top:10px;"></p>
+
+          <!-- скрытые поля -->
+          <input type="hidden" name="soup" id="input-soup">
+          <input type="hidden" name="main" id="input-main">
+          <input type="hidden" name="drink" id="input-drink">
+        </div>
+
+        <div class="form-block">
+          <h3>Ваши данные</h3>
+
+          <label for="name">Имя</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="phone">Номер телефона</label>
+          <input type="tel" id="phone" name="phone" required>
+
+          <label for="address">Адрес доставки</label>
+          <input type="text" id="address" name="address" required>
+          <p class="hint">Доставка осуществляется только по Москве</p>
+
+          <fieldset>
+            <legend>Время доставки:</legend>
+            <label><input type="radio" name="delivery" value="asap" required> Как можно скорее</label>
+            <label><input type="radio" name="delivery" value="time"> К указанному времени</label>
+          </fieldset>
+
+          <label for="time">Укажите время доставки</label>
+          <input type="time" id="time" name="time" min="07:00" max="23:00" step="300">
+
+          <div class="form-buttons">
+            <button type="reset">Сбросить</button>
+            <button type="submit">Отправить</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer id="contacts">
+    <p>Позвонить нам <a href="tel:+78005553535">+7-800-555-35-35</a></p>
+    <p>© Куманяев Никита 241-351</p>
+  </footer>
+
+  <script src="dishes.js"></script>
+  <script src="menu.js"></script>
+</body>
+</html>
+
