@@ -58,6 +58,8 @@ async function loadDishes() {
   } catch (e) {
     console.error("Ошибка загрузки блюд:", e);
     showNotification("Ошибка загрузки меню. Попробуйте обновить страницу.");
+    console.log("Блюда загружены:", dishes);
+    console.log("Категории:", [...new Set(dishes.map(d => d.category))]);
   }
 }
 
@@ -97,11 +99,11 @@ function applyFilter(category, kind) {
 
 function getContainerId(category) {
   return {
-    soup: "soups",
-    main: "mains",
-    salad: "salads",
-    drink: "drinks",
-    dessert: "desserts",
+    soup: "soups-list",
+    main: "mains-list",
+    salad: "salads-list",
+    drink: "drinks-list",
+    dessert: "desserts-list",
   }[category];
 }
 
@@ -254,4 +256,5 @@ function showNotification(text) {
     alertBox.remove();
   });
 }
+
 
