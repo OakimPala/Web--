@@ -50,7 +50,7 @@ async function loadDishes() {
     const data = await response.json();
 
   
-    dishes = data.dishes || [];
+    dishes = data || [];
 
    
     Object.keys(categories).forEach(cat => renderCategory(cat));
@@ -254,3 +254,4 @@ function showNotification(text) {
     alertBox.remove();
   });
 }
+
