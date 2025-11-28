@@ -1,18 +1,32 @@
-let dishes = []; 
+// ===== ГЛОБАЛЬНЫЕ =====
+let dishes = [];
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadDishes(); 
+const API_URL = "https://edu.std-900.ist.mospolytech.ru/labs/api/dishes";
 
-  const categories = {
-    soup: { container: "soups", filters: { fish: "Восточная кухня", meat: "Русская кухня", veg: "Овощные" } },
-    main: { container: "mains", filters: { fish: "Рыбные", meat: "Мясные", veg: "Овощные" } },
-    salad: { container: "salads", filters: { fish: "С рыбой", meat: "С мясом", cheese: "С сыром", veg: "Овощные" } },
-    drink: { container: "drinks", filters: { cold: "Холодные", hot: "Горячие" } },
-    dessert: { container: "desserts", filters: { small: "Маленькие", medium: "Средние", large: "Большие" } },
-  };
+const categories = {
+  soup: { container: "soups", filters: { fish: "Восточная кухня", meat: "Русская кухня", veg: "Овощные" } },
+  main: { container: "mains", filters: { fish: "Рыбные", meat: "Мясные", veg: "Овощные" } },
+  salad: { container: "salads", filters: { fish: "С рыбой", meat: "С мясом", cheese: "С сыром", veg: "Овощные" } },
+  drink: { container: "drinks", filters: { cold: "Холодные", hot: "Горячие" } },
+  dessert: { container: "desserts", filters: { small: "Маленькие", medium: "Средние", large: "Большие" } },
+};
 
-  window.categories = categories;
+// ====== ЗАГРУЗКА ======
+async function loadDishes() {
+  const res = await fetch(API_URL);
+  dishes = await res.json();
 
+  console.log("Блюда загружены:", dishes);
+
+  initFilters();
+  Object.keys(categories).forEach(c => renderCategory(c));
+}
+
+document.addEventListener("DOMContentLoaded", loadDishes);
+
+
+// ====== ФИЛЬТРЫ ======
+function initFilters() {
   Object.entries(categories).forEach(([category, { container, filters }]) => {
     const section = document.getElementById(container);
     if (!section) return;
@@ -29,53 +43,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const resetBtn = document.createElement("button");
-    resetBtn.textContent = "Сбросить фильтр";
-    resetBtn.classList.add("reset-btn");
+    resetBtn.textContent = "Сбросить";
     resetBtn.addEventListener("click", () => renderCategory(category));
     filterBlock.appendChild(resetBtn);
 
     section.parentNode.insertBefore(filterBlock, section);
   });
-
-  const orderForm = document.querySelector(".order-form");
-  if (orderForm) {
-    orderForm.addEventListener("submit", handleOrderSubmit);
-  }
-});
-
-
-async function loadDishes() {
-  try {
-    const response = await fetch("https://edu.std-900.ist.mospolytech.ru/labs/api/dishes"); 
-    const data = await response.json();
-
-  
-    dishes = data || [];
-
-   
-    Object.keys(categories).forEach(cat => renderCategory(cat));
-
-  } catch (e) {
-    console.error("Ошибка загрузки блюд:", e);
-    showNotification("Ошибка загрузки меню. Попробуйте обновить страницу.");
-    console.log("Блюда загружены:", dishes);
-    console.log("Категории:", [...new Set(dishes.map(d => d.category))]);
-  }
 }
 
 
-
+// ====== РЕНДЕР БЛЮД ======
 function renderCategory(category, filterKind = null) {
-  const container = document.getElementById(getContainerId(category));
-  if (!container) return;
+  const containerId = categories[category].container;
+  const container = document.getElementById(containerId);
   container.innerHTML = "";
 
-  let items = dishes.filter(d => d.category === category);
-  if (filterKind) {
-    items = items.filter(d => d.kind === filterKind);
-  }
+  let list = dishes.filter(d => d.category === category);
+  if (filterKind) list = list.filter(d => d.kind === filterKind);
 
-  items.forEach(dish => {
+  list.forEach(dish => {
     const card = document.createElement("div");
     card.classList.add("dish-card");
     card.innerHTML = `
@@ -83,8 +69,11 @@ function renderCategory(category, filterKind = null) {
       <p><strong>${dish.price}₽</strong></p>
       <p>${dish.name}</p>
       <p>${dish.count}</p>
-      <button type="button" class="add-btn" data-key="${dish.keyword}" data-category="${dish.category}">Добавить</button>
+      <button type="button" class="add-btn" data-key="${dish.keyword}" data-category="${dish.category}">
+        Добавить
+      </button>
     `;
+
     container.appendChild(card);
   });
 
@@ -97,17 +86,8 @@ function applyFilter(category, kind) {
   renderCategory(category, kind);
 }
 
-function getContainerId(category) {
-  return {
-    soup: "soups-list",
-    main: "mains-list",
-    salad: "salads-list",
-    drink: "drinks-list",
-    dessert: "desserts-list",
-  }[category];
-}
 
-
+// ====== ВЫБОР БЛЮД ======
 function addToOrder(keyword, category) {
   const dish = dishes.find(d => d.keyword === keyword);
   if (!dish) return;
@@ -120,141 +100,101 @@ function addToOrder(keyword, category) {
     dessert: "order-dessert",
   };
 
-  const orderElement = document.getElementById(displayMap[category]);
-  if (orderElement) {
-    orderElement.textContent = `${dish.name} — ${dish.price}₽`;
-  }
+  const target = document.getElementById(displayMap[category]);
+  target.textContent = `${dish.name} — ${dish.price}₽`;
+
   highlightCard(keyword, category);
 }
 
 function highlightCard(keyword, category) {
-  document.querySelectorAll(".dish-card").forEach(card => {
-    card.classList.remove('selected');
-  });
+  document.querySelectorAll(".dish-card").forEach(c => c.classList.remove("selected"));
 
-  const targetBtn = document.querySelector(`.add-btn[data-key="${keyword}"][data-category="${category}"]`);
-  if (targetBtn) {
-    const targetCard = targetBtn.closest('.dish-card');
-    targetCard.classList.add('selected');
-  }
+  const btn = document.querySelector(`.add-btn[data-key="${keyword}"][data-category="${category}"]`);
+  if (btn) btn.closest(".dish-card").classList.add("selected");
 }
 
+
+// ====== ОФОРМЛЕНИЕ ======
+document.querySelector(".order-form")?.addEventListener("submit", handleOrderSubmit);
 
 function handleOrderSubmit(e) {
   e.preventDefault();
 
-  const selectedDishes = getSelectedDishesFromDisplay();
-  
+  const items = getSelectedDishes();
   const counts = { soup: 0, main: 0, salad: 0, drink: 0 };
-  selectedDishes.forEach(item => {
-    if (counts[item.category] !== undefined) {
-      counts[item.category]++;
-    }
-  });
+  items.forEach(i => counts[i.category]++);
 
-  const { soup, main, salad, drink } = counts;
-  const totalItems = soup + main + salad + drink;
+  const total = counts.soup + counts.main + counts.salad + counts.drink;
 
-  if (totalItems === 0) {
-    showNotification("Ничего не выбрано. Выберите блюда для заказа");
-    return;
-  }
+  if (total === 0) return notify("Ничего не выбрано");
+  if (drink === 0) return notify("Выберите напиток");
 
-  if (totalItems > 0 && drink === 0) {
-    showNotification("Выберите напиток");
-    return;
-  }
+  if (counts.soup > 0 && counts.main === 0 && counts.salad === 0)
+    return notify("Выберите главное блюдо или салат");
 
-  if (soup > 0 && main === 0 && salad === 0) {
-    showNotification("Выберите главное блюдо или салат");
-    return;
-  }
-
-  if (salad > 0 && soup === 0 && main === 0) {
-    showNotification("Выберите суп или главное блюдо");
-    return;
-  }
-
-  if (drink > 0 && soup === 0 && main === 0 && salad === 0) {
-    showNotification("Выберите главное блюдо");
-    return;
-  }
-
-  const formData = new FormData(e.target);
-  const priceEl = document.querySelector(".price");
-  
   const data = {
-    name: formData.get('username'),
-    phone: formData.get('phone'),
-    items: selectedDishes,
-    total_price: priceEl ? priceEl.textContent : '0₽'
+    name: e.target.username.value,
+    phone: e.target.phone.value,
+    items,
+    total_price: document.querySelector(".price")?.textContent || "0₽"
   };
 
-  fetch('https://httpbin.org/post', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  fetch("https://httpbin.org/post", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
-  .then(response => response.json())
-  .then(result => {
-    console.log('Заказ успешно отправлен:', result);
-    showNotification("Заказ успешно оформлен!");
-  })
-  .catch(error => {
-    console.error('Ошибка отправки заказа:', error);
-    showNotification("Ошибка при оформлении заказа. Попробуйте еще раз.");
-  });
+  .then(r => r.json())
+  .then(() => notify("Заказ успешно оформлен!"))
+  .catch(() => notify("Ошибка отправки заказа"));
 }
 
 
-function getSelectedDishesFromDisplay() {
-  const selectedDishes = [];
-  const displayMap = {
+// ====== ПОЛУЧЕНИЕ ВЫБРАННЫХ ======
+function getSelectedDishes() {
+  const map = {
     soup: "order-soup",
-    main: "order-main", 
+    main: "order-main",
     salad: "order-salad",
     drink: "order-drink",
     dessert: "order-dessert"
   };
 
-  Object.entries(displayMap).forEach(([category, elementId]) => {
-    const element = document.getElementById(elementId);
-    if (element && element.textContent.includes("₽")) {
-      const text = element.textContent;
-      const name = text.split(" — ")[0];
-      const price = text.split(" — ")[1].replace("₽", "");
-      const dish = dishes.find(d => d.name === name && d.price.toString() === price);
-      if (dish) {
-        selectedDishes.push({
-          keyword: dish.keyword,
-          category: dish.category,
-          name: dish.name,
-          price: dish.price
-        });
-      }
-    }
+  const selected = [];
+
+  Object.entries(map).forEach(([category, id]) => {
+    const el = document.getElementById(id);
+    if (!el || !el.textContent.includes("₽")) return;
+
+    const [name, priceText] = el.textContent.split(" — ");
+    const price = parseInt(priceText);
+    const dish = dishes.find(d => d.name === name && d.price === price);
+
+    if (dish) selected.push(dish);
   });
 
-  return selectedDishes;
+  return selected;
 }
 
-function showNotification(text) {
+
+// ====== УВЕДОМЛЕНИЯ ======
+function notify(text) {
   const old = document.querySelector(".alert-box");
   if (old) old.remove();
 
-  const alertBox = document.createElement("div");
-  alertBox.className = "alert-box";
-  alertBox.innerHTML = `
+  const box = document.createElement("div");
+  box.className = "alert-box";
+  box.innerHTML = `
     <div class="alert-content">
       <p>${text}</p>
-      <button id="alert-ok">Окей 👌</button>
+      <button id="alert-ok">Окей</button>
     </div>
   `;
-  document.body.appendChild(alertBox);
+  document.body.appendChild(box);
 
-  document.getElementById("alert-ok").addEventListener("click", () => {
-    alertBox.remove();
-  });
+  document.getElementById("alert-ok").onclick = () => box.remove();
 }
+
+
 
 
