@@ -1,17 +1,17 @@
-// ===== ГЛОБАЛЬНЫЕ =====
+
 let dishes = [];
 
 const API_URL = "https://edu.std-900.ist.mospolytech.ru/labs/api/dishes";
 
 const categories = {
-  soup: { container: "soups", filters: { fish: "Восточная кухня", meat: "Русская кухня", veg: "Овощные" } },
-  main: { container: "mains", filters: { fish: "Рыбные", meat: "Мясные", veg: "Овощные" } },
-  salad: { container: "salads", filters: { fish: "С рыбой", meat: "С мясом", cheese: "С сыром", veg: "Овощные" } },
+  soup: { container: "soups", filters: { fish: "Рыбные", meat: "Мясные", veg: "Овощные" } },
+  main-course: { container: "mains", filters: { fish: "Рыбные", meat: "Мясные", veg: "Овощные" } },
+  salad: { container: "salads", filters: { fish: "С рыбой", meat: "С мясом", veg: "Овощные" } },
   drink: { container: "drinks", filters: { cold: "Холодные", hot: "Горячие" } },
   dessert: { container: "desserts", filters: { small: "Маленькие", medium: "Средние", large: "Большие" } },
 };
 
-// ====== ЗАГРУЗКА ======
+
 async function loadDishes() {
   const res = await fetch(API_URL);
   dishes = await res.json();
@@ -25,7 +25,6 @@ async function loadDishes() {
 document.addEventListener("DOMContentLoaded", loadDishes);
 
 
-// ====== ФИЛЬТРЫ ======
 function initFilters() {
   Object.entries(categories).forEach(([category, { container, filters }]) => {
     const section = document.getElementById(container);
@@ -52,7 +51,6 @@ function initFilters() {
 }
 
 
-// ====== РЕНДЕР БЛЮД ======
 function renderCategory(category, filterKind = null) {
   const containerId = categories[category].container;
   const container = document.getElementById(containerId);
@@ -87,7 +85,6 @@ function applyFilter(category, kind) {
 }
 
 
-// ====== ВЫБОР БЛЮД ======
 function addToOrder(keyword, category) {
   const dish = dishes.find(d => d.keyword === keyword);
   if (!dish) return;
@@ -114,7 +111,6 @@ function highlightCard(keyword, category) {
 }
 
 
-// ====== ОФОРМЛЕНИЕ ======
 document.querySelector(".order-form")?.addEventListener("submit", handleOrderSubmit);
 
 function handleOrderSubmit(e) {
@@ -150,7 +146,6 @@ function handleOrderSubmit(e) {
 }
 
 
-// ====== ПОЛУЧЕНИЕ ВЫБРАННЫХ ======
 function getSelectedDishes() {
   const map = {
     soup: "order-soup",
@@ -177,7 +172,7 @@ function getSelectedDishes() {
 }
 
 
-// ====== УВЕДОМЛЕНИЯ ======
+
 function notify(text) {
   const old = document.querySelector(".alert-box");
   if (old) old.remove();
@@ -194,6 +189,7 @@ function notify(text) {
 
   document.getElementById("alert-ok").onclick = () => box.remove();
 }
+
 
 
 
