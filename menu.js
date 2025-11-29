@@ -91,7 +91,7 @@ function addToOrder(keyword, category) {
 
   const displayMap = {
     soup: "order-soup",
-    main: "order-main",
+    "main-course": "order-main",
     salad: "order-salad",
     drink: "order-drink",
     dessert: "order-dessert",
@@ -117,16 +117,36 @@ function handleOrderSubmit(e) {
   e.preventDefault();
 
   const items = getSelectedDishes();
-  const counts = { soup: 0, main: 0, salad: 0, drink: 0 };
+  const counts = { soup: 0, "main-course": 0, salad: 0, drink: 0 };
   items.forEach(i => counts[i.category]++);
 
-  const total = counts.soup + counts.main + counts.salad + counts.drink;
+  const { soup, "main-course": main, salad, drink } = counts;
+  const total = soup + main + salad + drink;
 
-  if (total === 0) return notify("Ничего не выбрано");
-  if (drink === 0) return notify("Выберите напиток");
+  if (total === 0) {
+    notify("Ничего не выбрано. Выберите блюда для заказа");
+    return;
+  }
 
-  if (counts.soup > 0 && counts.main === 0 && counts.salad === 0)
-    return notify("Выберите главное блюдо или салат");
+  if (total > 0 && drink === 0) {
+    notify("Выберите напиток");
+    return;
+  }
+
+  if (soup > 0 && main === 0 && salad === 0) {
+    notify("Выберите главное блюдо или салат");
+    return;
+  }
+
+  if (salad > 0 && soup === 0 && main === 0) {
+    notify("Выберите суп или главное блюдо");
+    return;
+  }
+
+  if (drink > 0 && soup === 0 && main === 0 && salad === 0) {
+    notify("Выберите главное блюдо");
+    return;
+  }
 
   const data = {
     name: e.target.username.value,
@@ -149,7 +169,7 @@ function handleOrderSubmit(e) {
 function getSelectedDishes() {
   const map = {
     soup: "order-soup",
-    main: "order-main",
+    "main-course": "order-main",
     salad: "order-salad",
     drink: "order-drink",
     dessert: "order-dessert"
@@ -189,6 +209,7 @@ function notify(text) {
 
   document.getElementById("alert-ok").onclick = () => box.remove();
 }
+
 
 
 
