@@ -202,13 +202,14 @@ function notify(text) {
   box.innerHTML = `
     <div class="alert-content">
       <p>${text}</p>
-      <button id="alert-ok">Окей</button>
+      <button id="alert-ok">Окей 👌</button>
     </div>
   `;
   document.body.appendChild(box);
 
   document.getElementById("alert-ok").onclick = () => box.remove();
 }
+
 
 
 
