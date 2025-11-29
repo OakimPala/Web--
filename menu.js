@@ -5,7 +5,7 @@ const API_URL = "https://edu.std-900.ist.mospolytech.ru/labs/api/dishes";
 
 const categories = {
   soup: { container: "soups", filters: { fish: "Рыбные", meat: "Мясные", veg: "Овощные" } },
-  main_course: { container: "mains", filters: { fish: "Рыбные", meat: "Мясные", veg: "Овощные" } },
+  "main-course": { container: "mains", filters: { fish: "Рыбные", meat: "Мясные", veg: "Овощные" } },
   salad: { container: "salads", filters: { fish: "С рыбой", meat: "С мясом", veg: "Овощные" } },
   drink: { container: "drinks", filters: { cold: "Холодные", hot: "Горячие" } },
   dessert: { container: "desserts", filters: { small: "Маленькие", medium: "Средние", large: "Большие" } },
@@ -189,6 +189,7 @@ function notify(text) {
 
   document.getElementById("alert-ok").onclick = () => box.remove();
 }
+
 
 
 
